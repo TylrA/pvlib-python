@@ -462,9 +462,9 @@ def pyephem(time, latitude, longitude, altitude=0, pressure=101325,
     try:
         import ephem
     except ImportError:
-        raise ImportError('Ephem must be installed')
+        raise ImportError('PyEphem must be installed')
 
-    pvl_logger.debug('using Ephem to calculate solar position')
+    pvl_logger.debug('using PyEphem to calculate solar position')
 
     # if localized, convert to UTC. otherwise, assume UTC.
     try:
