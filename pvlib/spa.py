@@ -826,8 +826,8 @@ def atmospheric_refraction_correction(local_pressure, local_temp,
                                       topocentric_elevation_angle_wo_atmosphere,
                                       atmos_refract):
     # switch sets delta_e when the sun is below the horizon
-    switch = topocentric_elevation_angle_wo_atmosphere >= -1.0 * (
-        0.26667 + atmos_refract)
+    switch = np.array(topocentric_elevation_angle_wo_atmosphere >= -1.0 * (
+        0.26667 + atmos_refract), dtype=np.dtype(int))
     delta_e = ((local_pressure / 1010.0) * (283.0 / (273 + local_temp))
                * 1.02 / (60 * np.tan(np.radians(
                    topocentric_elevation_angle_wo_atmosphere
@@ -888,9 +888,9 @@ def equation_of_time(sun_mean_longitude, geocentric_sun_right_ascension,
     E = E % 360
     # convert to minutes
     E *= 4
-    greater = E > 20
-    less = E < -20
-    other = (E <= 20) & (E >= -20)
+    greater = np.array(E > 20, dtype=np.dtype(int))
+    less = np.array(E < -20, dtype=np.dtype(int))
+    other = np.array((E <= 20) & (E >= -20), dtype=np.dtype(int))
     E = greater * (E - 1440) + less * (E + 1440) + other * E
     return E
 
